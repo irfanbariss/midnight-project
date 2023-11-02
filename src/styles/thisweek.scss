@@ -1,0 +1,173 @@
+.container {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+  padding: 1rem;
+  .days {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    ul {
+      display: flex;
+      list-style-type: none;
+      gap: 1rem;
+
+      li {
+        transition: 0.2s;
+
+        &:hover {
+          color: #a408ff;
+          transform: translateY(-3px);
+          cursor: pointer;
+        }
+        &.active {
+          color: #a408ff;
+          transform: translateY(-3px);
+        }
+      }
+    }
+  }
+}
+
+.events-container {
+  width: 60%;
+  min-height: 500px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); //change for mobiles
+
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.281);
+  margin: auto;
+  border-radius: 1rem;
+
+  .no-events {
+    font-size: 24px;
+
+    color: #777;
+    position: absolute;
+    right: 0;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .card {
+    a {
+      display: block;
+      img {
+        width: 100%;
+        min-height: 80%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        transition: transform 0.2s;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+    width: 100%;
+    height: 350px; // chanbge for mobiles
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    cursor: pointer;
+
+    // img {
+    //   width: 100%;
+    //   height: 80%;
+    //   position: absolute;
+    //   top: 0;
+    //   object-fit: cover;
+    //   transition: 0.2s;
+    //   //   overflow: hidden;
+    //   &:hover {
+    //     transform: scale(1.1);
+    //   }
+    // }
+    .event-info {
+      width: 100%;
+      height: 70px;
+      background-color: black;
+      position: absolute;
+      bottom: 0;
+      text-align: start;
+      padding-bottom: 2rem;
+      padding-left: 1rem;
+      p {
+        text-transform: capitalize;
+        font-weight: 100;
+        margin: 5px 5px;
+      }
+      .dates {
+        font-weight: 100;
+        color: #777;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .ticket-dash {
+    border: dashed black 2px;
+    width: 90%;
+  }
+  .buy {
+    background-color: black;
+    border-radius: 0.5rem;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    text-transform: uppercase;
+    &:hover {
+      transform: translateY(5px);
+      cursor: pointer;
+    }
+  }
+}
+
+.line-break {
+  width: 30%;
+  margin: 1rem auto 2rem;
+  height: 1rem;
+  background-color: black;
+  border: none;
+  border-radius: 1rem;
+}
+
+.upcoming-events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    margin: 2rem auto 1rem;
+  }
+}

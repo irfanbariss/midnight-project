@@ -1,0 +1,69 @@
+.upcoming-events-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  h1 {
+    font-size: 32px;
+  }
+  .upcoming-events {
+    width: 1000px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 3rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.281);
+    margin: auto;
+    border-radius: 1rem;
+    .card {
+      width: 100%;
+      height: 350px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      background-color: black;
+      margin: auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.5rem;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        height: 80%;
+        position: absolute;
+        top: 0;
+        object-fit: cover;
+        transition: 0.2s;
+        //   overflow: hidden;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+      .event-info {
+        width: 100%;
+        height: 70px;
+        background-color: black;
+        position: absolute;
+        bottom: 0;
+        text-align: start;
+        padding-bottom: 2rem;
+        padding-left: 1rem;
+        p {
+          text-transform: capitalize;
+          font-weight: 100;
+          margin: 5px 5px;
+        }
+        .dates {
+          font-weight: 100;
+          color: #777;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

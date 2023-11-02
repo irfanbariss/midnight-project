@@ -1,0 +1,63 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  background: black;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  padding: 5px;
+  z-index: 100;
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+  h1 {
+    font-size: 32px;
+    background: -webkit-linear-gradient(#a408ff, #77110c);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-right: 1px solid #a408ff;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    letter-spacing: -2px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .nav-sections {
+    display: flex;
+    align-items: center;
+    margin: auto 5rem;
+    gap: 3rem;
+    width: 100%;
+    a {
+      text-decoration: none;
+    }
+    .nav-btn {
+      color: #fff;
+      transition: 0.2s;
+      &:hover {
+        color: #a408ff;
+        cursor: pointer;
+        &:active {
+          color: #fff;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  .account {
+    margin: 0 1rem;
+    transition: 0.2s;
+    &:hover {
+      cursor: pointer;
+      color: #a408ff;
+    }
+  }
+}
