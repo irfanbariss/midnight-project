@@ -2,39 +2,41 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
   gap: 15px;
+  width: 100%;
+  max-width: 1300px;
   h1 {
     font-size: 32px;
   }
   .upcoming-events {
-    width: 1000px;
-    padding: 20px;
+    width: 90%;
+    padding: 5px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 3rem;
+    gap: 1rem;
     align-items: center;
     justify-content: center;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.281);
-    margin: auto;
     border-radius: 1rem;
     .card {
-      width: 100%;
-      height: 350px;
+      width: 80%;
+      height: 300px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       background-color: black;
-      margin: auto;
+      margin: 1rem;
       position: relative;
       overflow: hidden;
       border-radius: 0.5rem;
-      cursor: pointer;
 
       img {
         width: 100%;
-        height: 80%;
+        height: 70%;
         position: absolute;
         top: 0;
         object-fit: cover;
@@ -46,7 +48,6 @@
       }
       .event-info {
         width: 100%;
-        height: 70px;
         background-color: black;
         position: absolute;
         bottom: 0;
@@ -55,15 +56,40 @@
         padding-left: 1rem;
         p {
           text-transform: capitalize;
-          font-weight: 100;
+          font-weight: 400;
           margin: 5px 5px;
         }
         .dates {
-          font-weight: 100;
+          font-weight: 400;
           color: #777;
           font-size: 14px;
         }
       }
     }
+  }
+}
+@media screen and (max-width: 600px) {
+  .upcoming-events-container {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 600px) {
+  .upcoming-events-container {
+    width: 60%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .upcoming-events-container {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 992px) {
+  .upcoming-events-container {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .upcoming-events-container {
+    width: 60%;
   }
 }

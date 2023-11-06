@@ -1,20 +1,55 @@
+.title {
+  margin-top: 1rem;
+  font-size: 3rem;
+  text-align: center;
+  text-shadow: 5px 10px 10px #000;
+}
+.page-cont {
+  margin: 0 auto;
+  max-width: 1920px;
+  @media screen and (min-width: 1200px) {
+    width: 100%;
+  }
+  .search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    input {
+      @media screen and (max-width: 768px) {
+        width: 90%;
+      }
+      width: 30%;
+      padding: 1.2rem;
+      font-size: 16px;
+      border: none;
+      border-radius: 1rem;
+      outline: none;
+      background-color: #0006;
+      color: #fff;
+    }
+  }
+}
 .container {
   max-width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin: auto;
+  justify-content: center;
+  margin: 0.2rem auto;
   padding: 1rem;
   .days {
     width: 60%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: auto;
+    h1 {
+      text-shadow: 5px 10px 10px #000;
+    }
+    // margin: auto;
     ul {
       display: flex;
       list-style-type: none;
       gap: 1rem;
+      overflow: hidden;
 
       li {
         transition: 0.2s;
@@ -34,6 +69,12 @@
 }
 
 .events-container {
+  // @media screen and (margin-top: 2560px) {
+  //   width: 40%;
+  // }
+  // @media screen and (min-width: 3840px) {
+  //   width: 30%;
+  // }
   width: 60%;
   min-height: 500px;
   padding: 20px;
@@ -80,7 +121,7 @@
       }
     }
     width: 100%;
-    height: 350px; // chanbge for mobiles
+    min-height: 350px; // chanbge for mobiles
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -105,21 +146,24 @@
     //   }
     // }
     .event-info {
+      @media screen and (max-width: 768px) {
+        height: 120px;
+      }
       width: 100%;
-      height: 70px;
+      height: 90px;
       background-color: black;
       position: absolute;
       bottom: 0;
-      text-align: start;
+      text-align: left;
       padding-bottom: 2rem;
       padding-left: 1rem;
       p {
         text-transform: capitalize;
-        font-weight: 100;
-        margin: 5px 5px;
+        font-weight: 400;
+        margin: 3px 5px;
       }
       .dates {
-        font-weight: 100;
+        font-weight: 400;
         color: #777;
         font-size: 14px;
       }
@@ -139,7 +183,7 @@
   .buy {
     background-color: black;
     border-radius: 0.5rem;
-    height: 50px;
+    min-height: 50px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -162,12 +206,29 @@
   border-radius: 1rem;
 }
 
-.upcoming-events {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  h1 {
-    margin: 2rem auto 1rem;
+@media screen and (max-width: 968px) {
+  .days li {
+    display: none;
+  }
+  .days h1 {
+    margin: auto;
+    text-align: left;
+    display: flex;
+  }
+
+  .events-container {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: 1rem;
+    padding: 1.2rem;
+  }
+  .buy {
+    font-size: 12px;
+  }
+  .all {
+    grid-template-columns: repeat(1, 1fr);
+    width: 100%;
+    gap: 2rem;
+    padding: 0.5rem;
   }
 }

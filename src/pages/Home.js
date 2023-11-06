@@ -2,19 +2,21 @@ import imgData from '../Data'
 import Carousel from '../components/Carousel'
 import '../styles/main.scss'
 
-import ThisWeek from '../components/ThisWeek'
 import Upcoming from '../components/Upcoming'
+import { useEffect } from 'react'
+import HotTickets from '../components/HotTickets'
 
 const Home = () => {
+  useEffect(() => {
+    // Scroll to the top of the page when the component loads
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <>
       <div>
         <Carousel data={imgData} />
-        <ThisWeek />
+        <HotTickets />
         <Upcoming />
-      </div>
-      <div className="footer">
-        <p>Developed by © Barış Özer. All Rights Reserved</p>
       </div>
     </>
   )

@@ -1,19 +1,29 @@
 import { useParams } from 'react-router-dom'
 import imgData from '../Data'
 import '../styles/eventpage.scss'
+// import '../styles/newEventPage.scss'
 import { useState, useEffect } from 'react'
+import { FaLocationArrow } from 'react-icons/fa'
 
 const EventPage = () => {
+  useEffect(() => {
+    // Scroll to the top of the page when the component loads
+    window.scrollTo(0, 0)
+  }, [])
   const { name } = useParams()
   const eventData = imgData.find((event) => event.name === name)
   const [stdCount, setStdCount] = useState(0)
   const [bckCount, setBckCount] = useState(0)
   const [totalPrice, setTotalPrice] = useState(0)
+  const [selectedOpt, setSelectedOpt] = useState('Standard 30$')
+
+  const handleOptChange = (e) => {
+    setSelectedOpt(e.target.value)
+  }
 
   const stdPrice = 30
   const bckPrice = 60
   useEffect(() => {
-    // Miktarlar değiştiğinde fiyatları güncelle
     const total = stdCount * stdPrice + bckCount * bckPrice
     setTotalPrice(total)
   }, [stdCount, bckCount])
@@ -34,55 +44,104 @@ const EventPage = () => {
       setBckCount(bckCount - 1)
     }
   }
+  const mblIncrease = () => {
+    if (selectedOpt === 'Standard 30$') {
+      setStdCount(stdCount + 1)
+    } else {
+      setBckCount(bckCount + 1)
+    }
+  }
+
+  const mblDecrease = () => {
+    if (selectedOpt === 'Standard 30$') {
+      if (stdCount > 0) {
+        setStdCount(stdCount - 1)
+      }
+    } else if (selectedOpt === 'Backstage 60$') {
+      if (bckCount > 0) {
+        setBckCount(bckCount - 1)
+      }
+    }
+  }
 
   if (!eventData) {
     return <div>Event not found</div>
   }
   return (
     <div className="event-container">
-      <div className="single-event-container">
-        <div className="single-event">
-          <h1 className="event-title">{eventData.name}</h1>
-          <div className="event-content">
-            <div className="event-image">
-              <img src={eventData.url} alt={eventData.name} />
-            </div>
-            <div className="event-details">
-              <div className="about-event">
-                <h3>About</h3>
-                {eventData.about}
-                <div className="rules">
-                  <h3>Rules</h3>
-                  <p>
-                    Event has an age limit of 18 <br />
-                    For disabled enquiries please call Volkswagen Arena
-                    (+902123776700). <br />
-                    Sound in the venue may cause temporary hearing problems.{' '}
-                    <br />
-                    Lighting in the venue may cause temporary eye discomfort.
-                    <br />
-                    All audience must have their tickets with them during the
-                    event.
-                    <br /> Audience that exits the venue will need to purchase a
-                    new ticket in order to enter the venue again.
-                    <br /> Event tickets should only be purchased from official
-                    selling points determined by the promoter. <br />
-                    The promoter has a right to not allow the ticket holder if
-                    the ticket is not purchased from an official selling point.{' '}
-                    <br />
-                    The venue has a right to not allow any person if they seem
-                    unsuitable for the event, audience who are not allowed will
-                    receive a refund. <br /> No food or drinks are allowed in
-                    the venue. -If there is a tobacco sponsor- Open cigarette
-                    packs and tobacco will not be allowed in the venue.
-                  </p>
-                </div>
-                {/* Etkinlik hakkında bilgileri buraya ekleyin */}
-              </div>
+      <div className="single-event">
+        <h1 className="event-title">{eventData.name}</h1>
+        <div className="event-image">
+          <img src={eventData.url} alt={eventData.name} />
+        </div>
+        <div className="mobile-purchase">
+          <h2>Tickets</h2>
+          <div className="options">
+            <select value={selectedOpt} onChange={handleOptChange}>
+              <option className="std">Standard {stdPrice}$</option>
+              <option className="bck">Backstage {bckPrice}$</option>
+            </select>
+            <div className="mbl-btns">
+              <button className="btn decrease" onClick={mblDecrease}>
+                -
+              </button>
+              <span>
+                Amount:
+                {selectedOpt === 'Standard 30$' ? stdCount : bckCount}
+              </span>
+              <span>Total:{totalPrice}$</span>
+              <button className="btn increase" onClick={mblIncrease}>
+                +
+              </button>
             </div>
           </div>
+          <button className="mbl-atc-btn">Add to cart</button>
         </div>
-        <div className="add-to-cart">
+        <div className="event-details">
+          <div className="about-event">
+            <h3>About</h3>
+
+            <p className="venue">
+              <FaLocationArrow size={'12px'}></FaLocationArrow>
+              {'  '}
+              {eventData.venue}
+              <br />
+              {eventData.date}
+              {eventData.day}
+              <br />
+              {eventData.hours}
+            </p>
+
+            {eventData.about}
+            <div className="rules">
+              <h3>Rules</h3>
+              <p>
+                Event has an age limit of 18 <br />
+                For disabled enquiries please call Volkswagen Arena
+                (+902123776700). <br />
+                Sound in the venue may cause temporary hearing problems. <br />
+                Lighting in the venue may cause temporary eye discomfort.
+                <br />
+                All audience must have their tickets with them during the event.
+                <br /> Audience that exits the venue will need to purchase a new
+                ticket in order to enter the venue again.
+                <br /> Event tickets should only be purchased from official
+                selling points determined by the promoter. <br />
+                The promoter has a right to not allow the ticket holder if the
+                ticket is not purchased from an official selling point. <br />
+                The venue has a right to not allow any person if they seem
+                unsuitable for the event, audience who are not allowed will
+                receive a refund. <br /> No food or drinks are allowed in the
+                venue. -If there is a tobacco sponsor- Open cigarette packs and
+                tobacco will not be allowed in the venue.
+              </p>
+            </div>
+            {/* Etkinlik hakkında bilgileri buraya ekleyin */}
+          </div>
+        </div>
+      </div>
+      <div className="add-to-cart">
+        <div className="event-options">
           <div className="standard-options">
             <h3>Standard</h3>
             <p className="price">{stdPrice}$</p>
@@ -109,8 +168,8 @@ const EventPage = () => {
               </button>
             </div>
             <div className="total">Total: {totalPrice}$</div>
+            <button className="buy-btn">Add to Cart</button>
           </div>
-          <button className="buy-btn">Add to Cart</button>
         </div>
       </div>
     </div>

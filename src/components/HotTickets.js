@@ -3,12 +3,12 @@ import eventsData from '../data/Events'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const ThisWeek = () => {
+const HotTickets = () => {
   const [selectedDay, setSelectedDay] = useState(null)
   const [filteredEvents, setFilteredEvents] = useState([])
   const handleDayClick = (day) => {
     setSelectedDay(day)
-    const filtered = eventsData.filter((e) => e.date === day)
+    const filtered = eventsData.filter((e) => e.day === day)
     setFilteredEvents(filtered)
   }
   const handleAllClick = () => {
@@ -19,15 +19,16 @@ const ThisWeek = () => {
     return eventList.map((image) => (
       <div className="card-container" key={image.name}>
         <div className="card">
-          <Link to={`/this-week/${image.name}`}>
+          <Link to={`/hot-tickets/${image.name}`}>
             <div className="image-container">
-              <img src={image.url} alt={image.name} />
+              <img src={image.url} alt={image.name} loading="lazy" />
             </div>
           </Link>
           <div className="event-info">
             <p>{image.name}</p>
             <p className="dates">
               {image.date}
+              {image.day}
               <br />
               {image.hours}
             </p>
@@ -40,10 +41,10 @@ const ThisWeek = () => {
     ))
   }
   return (
-    <>
+    <div className="page-cont">
       <div className="container">
         <div className="days">
-          <h1>This Week</h1>
+          <h1>Hot Tickets</h1>
           <ul>
             <li
               className={selectedDay === null ? 'active' : ''}
@@ -52,44 +53,44 @@ const ThisWeek = () => {
               All
             </li>
             <li
-              className={selectedDay === 'monday' ? 'active' : ''}
-              onClick={() => handleDayClick('monday')}
+              className={selectedDay === 'Monday' ? 'active' : ''}
+              onClick={() => handleDayClick('Monday')}
             >
               Monday
             </li>
             <li
-              className={selectedDay === 'tuesday' ? 'active' : ''}
-              onClick={() => handleDayClick('tuesday')}
+              className={selectedDay === 'Tuesday' ? 'active' : ''}
+              onClick={() => handleDayClick('Tuesday')}
             >
               Tuesday
             </li>
             <li
-              className={selectedDay === 'wednesday' ? 'active' : ''}
-              onClick={() => handleDayClick('wednesday')}
+              className={selectedDay === 'Wednesday' ? 'active' : ''}
+              onClick={() => handleDayClick('Wednesday')}
             >
               Wednesday
             </li>
             <li
-              className={selectedDay === 'thursday' ? 'active' : ''}
-              onClick={() => handleDayClick('thursday')}
+              className={selectedDay === 'Thursday' ? 'active' : ''}
+              onClick={() => handleDayClick('Thursday')}
             >
               Thursday
             </li>
             <li
-              className={selectedDay === 'friday' ? 'active' : ''}
-              onClick={() => handleDayClick('friday')}
+              className={selectedDay === 'Friday' ? 'active' : ''}
+              onClick={() => handleDayClick('Friday')}
             >
               Friday
             </li>
             <li
-              className={selectedDay === 'saturday' ? 'active' : ''}
-              onClick={() => handleDayClick('saturday')}
+              className={selectedDay === 'Saturday' ? 'active' : ''}
+              onClick={() => handleDayClick('Saturday')}
             >
               Saturday
             </li>
             <li
-              className={selectedDay === 'sunday' ? 'active' : ''}
-              onClick={() => handleDayClick('sunday')}
+              className={selectedDay === 'Sunday' ? 'active' : ''}
+              onClick={() => handleDayClick('Sunday')}
             >
               Sunday
             </li>
@@ -109,8 +110,8 @@ const ThisWeek = () => {
         )}
       </div>
       <hr className="line-break" />
-    </>
+    </div>
   )
 }
-export default ThisWeek
+export default HotTickets
 export { eventsData }

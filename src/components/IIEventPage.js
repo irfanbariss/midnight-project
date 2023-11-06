@@ -1,17 +1,16 @@
 import { useParams } from 'react-router-dom'
-import { eventsData } from './HotTickets'
 import { useEffect, useState } from 'react'
 import { FaLocationArrow } from 'react-icons/fa'
-
+import allEvents from '../data/AllEventsData'
 import '../styles/eventpage.scss'
 
-const IEventPage = () => {
+const IIEventPage = () => {
   useEffect(() => {
     // Scroll to the top of the page when the component loads
     window.scrollTo(0, 0)
   }, [])
   const { name } = useParams()
-  const eventData = eventsData.find((event) => event.name === name)
+  const eventData = allEvents.find((event) => event.name === name)
   const [stdCount, setStdCount] = useState(0)
   const [bckCount, setBckCount] = useState(0)
   const [totalPrice, setTotalPrice] = useState(0)
@@ -105,6 +104,7 @@ const IEventPage = () => {
               {eventData.venue}
               <br />
               {eventData.date}
+              {eventData.day}
               <br />
               {eventData.hours}
             </p>
@@ -171,4 +171,5 @@ const IEventPage = () => {
     </div>
   )
 }
-export default IEventPage
+export default IIEventPage
+export { allEvents }
