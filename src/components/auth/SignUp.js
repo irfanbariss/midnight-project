@@ -6,8 +6,21 @@ const SignUp = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState(null)
+  const [passwordMatchError, setPasswordMatchError] = useState(false)
+
   const handleSignUp = (e) => {
     e.preventDefault()
+    if (password !== confirmPassword) {
+      setPasswordMatchError(true)
+      setTimeout(() => {
+        setPasswordMatchError(false)
+      }, 4000)
+      return
+    } else {
+      setPasswordMatchError(false)
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential)
@@ -19,6 +32,9 @@ const SignUp = () => {
   return (
     <div className="form-container">
       <h2>Sign Up</h2>
+      {passwordMatchError && (
+        <div className="error-message">Passwords do not match</div>
+      )}
       <form action="submit" onSubmit={handleSignUp}>
         <input
           type="text"
@@ -53,6 +69,8 @@ const SignUp = () => {
           name="confirm-password"
           id="confirm-password"
           placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
         <button type="submit">Sign Up</button>

@@ -5,17 +5,18 @@ import { FaLocationArrow } from 'react-icons/fa'
 
 import '../styles/eventpage.scss'
 
-const IEventPage = () => {
+const IEventPage = ({ addProductToCart }) => {
   useEffect(() => {
     // Scroll to the top of the page when the component loads
     window.scrollTo(0, 0)
   }, [])
+
   const { name } = useParams()
   const eventData = eventsData.find((event) => event.name === name)
   const [stdCount, setStdCount] = useState(0)
   const [bckCount, setBckCount] = useState(0)
   const [totalPrice, setTotalPrice] = useState(0)
-  const [selectedOpt, setSelectedOpt] = useState('Standard 30$')
+  const [selectedOpt, setSelectedOpt] = useState('')
 
   const handleOptChange = (e) => {
     setSelectedOpt(e.target.value)
@@ -29,7 +30,10 @@ const IEventPage = () => {
   }, [stdCount, bckCount])
 
   const increaseStdCount = () => {
+    // if (selectedOpt === 'Standard 30$') {
     setStdCount(stdCount + 1)
+    // }
+    // setBckCount(pre => pre + 1)
   }
   const decreaseStdCount = () => {
     if (stdCount > 0) {
@@ -37,7 +41,9 @@ const IEventPage = () => {
     }
   }
   const increaseBckCount = () => {
+    // if (selectedOpt === 'Backstage 60$') {
     setBckCount(bckCount + 1)
+    // }
   }
   const decreaseBckCount = () => {
     if (bckCount > 0) {
@@ -94,7 +100,29 @@ const IEventPage = () => {
               </button>
             </div>
           </div>
-          <button className="mbl-atc-btn">Add to Cart</button>
+          <button
+            className={
+              stdCount === 0 && bckCount === 0 ? 'disabled' : 'mbl-atc-btn'
+            }
+            disabled={stdCount === 0 && bckCount === 0}
+            onClick={() => {
+              // Create a product object representing the selected event
+              const product = {
+                name: eventData.name,
+                day: eventData.day,
+                date: eventData.date,
+                venue: eventData.venue,
+                price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
+                count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
+                url: eventData.url,
+                type: selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+              }
+              // Add the selected event to the cart
+              addProductToCart(product)
+            }}
+          >
+            Add to Cart
+          </button>
         </div>
         <div className="event-details">
           <div className="about-event">
@@ -146,7 +174,13 @@ const IEventPage = () => {
                 -
               </button>
               <span className="standard-price">{stdCount}</span>
-              <button className="btn increase" onClick={increaseStdCount}>
+              <button
+                className="btn increase"
+                onClick={() => {
+                  increaseStdCount()
+                  setSelectedOpt('Standard 30$')
+                }}
+              >
                 +
               </button>
             </div>
@@ -159,12 +193,41 @@ const IEventPage = () => {
                 -
               </button>
               <span className="backstage-price">{bckCount}</span>
-              <button className="btn increase" onClick={increaseBckCount}>
+              <button
+                className="btn increase"
+                onClick={() => {
+                  increaseBckCount()
+                  setSelectedOpt('Backstage 60$')
+                }}
+              >
                 +
               </button>
             </div>
             <div className="total">Total: {totalPrice}$</div>
-            <button className="buy-btn">Add to Cart</button>
+            <button
+              className={
+                stdCount === 0 && bckCount === 0 ? 'disabled' : 'buy-btn'
+              }
+              disabled={stdCount === 0 && bckCount === 0}
+              onClick={() => {
+                // Create a product object representing the selected event
+                const product = {
+                  name: eventData.name,
+                  day: eventData.day,
+                  date: eventData.date,
+                  venue: eventData.venue,
+                  price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
+                  count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
+                  url: eventData.url,
+                  type:
+                    selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+                }
+                // Add the selected event to the cart
+                addProductToCart(product)
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>

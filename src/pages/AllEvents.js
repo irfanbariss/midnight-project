@@ -40,7 +40,9 @@ const AllEvents = () => {
         </div>
 
         <hr className="ticket-dash" />
-        <div className="buy">Add to Cart</div>
+        <Link to={`/all-events/${image.name}`} className="buy">
+          Add to Cart
+        </Link>
       </div>
     ))
   }

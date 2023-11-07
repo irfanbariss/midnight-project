@@ -25,6 +25,21 @@ nav {
   top: 0; // main ekrana height 100vh değil 100% ekle
   z-index: 1000;
   width: 100%;
+  .cart {
+    @media screen and (max-width: 600px) {
+      margin: auto;
+    }
+    margin-right: 6rem;
+  }
+  .cart-amount {
+    display: flex;
+    align-items: center;
+    background-color: $mainColor;
+    padding: 0.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    color: black;
+  }
   .account-link {
     @media screen and (max-width: 600px) {
       position: relative;

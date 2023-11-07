@@ -4,7 +4,7 @@ import { FaLocationArrow } from 'react-icons/fa'
 import allEvents from '../data/AllEventsData'
 import '../styles/eventpage.scss'
 
-const IIEventPage = () => {
+const IIEventPage = ({ addProductToCart }) => {
   useEffect(() => {
     // Scroll to the top of the page when the component loads
     window.scrollTo(0, 0)
@@ -93,7 +93,29 @@ const IIEventPage = () => {
               </button>
             </div>
           </div>
-          <button className="mbl-atc-btn">Add to Cart</button>
+          <button
+            className={
+              stdCount === 0 && bckCount === 0 ? 'disabled' : 'mbl-atc-btn'
+            }
+            disabled={stdCount === 0 && bckCount === 0}
+            onClick={() => {
+              // Create a product object representing the selected event
+              const product = {
+                name: eventData.name,
+                day: eventData.day,
+                date: eventData.date,
+                venue: eventData.venue,
+                price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
+                count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
+                url: eventData.url,
+                type: selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+              }
+              // Add the selected event to the cart
+              addProductToCart(product)
+            }}
+          >
+            Add to Cart
+          </button>
         </div>
         <div className="event-details">
           <div className="about-event">
@@ -164,7 +186,30 @@ const IIEventPage = () => {
               </button>
             </div>
             <div className="total">Total: {totalPrice}$</div>
-            <button className="buy-btn">Add to Cart</button>
+            <button
+              className={
+                stdCount === 0 && bckCount === 0 ? 'disabled' : 'buy-btn'
+              }
+              disabled={stdCount === 0 && bckCount === 0}
+              onClick={() => {
+                // Create a product object representing the selected event
+                const product = {
+                  name: eventData.name,
+                  day: eventData.day,
+                  date: eventData.date,
+                  venue: eventData.venue,
+                  price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
+                  count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
+                  url: eventData.url,
+                  type:
+                    selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+                }
+                // Add the selected event to the cart
+                addProductToCart(product)
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>

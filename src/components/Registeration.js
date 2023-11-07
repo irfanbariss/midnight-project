@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import '../styles/account.scss'
 import SignUp from './auth/SignUp'
 import SignIn from './auth/SignIn'
-import AuthDetails from './auth/AuthDetails'
 
 const Registeration = () => {
   useEffect(() => {
@@ -27,7 +26,7 @@ const Registeration = () => {
     <div className="wrapper">
       <div className="account-container">
         {isSignUp ? <SignUp /> : <SignIn />}
-        {<AuthDetails />}
+
         <p onClick={toggleForm}>
           {isSignUp ? 'Already have an account?' : "Don't have an account?"}
         </p>

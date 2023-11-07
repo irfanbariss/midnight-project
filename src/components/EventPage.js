@@ -5,7 +5,7 @@ import '../styles/eventpage.scss'
 import { useState, useEffect } from 'react'
 import { FaLocationArrow } from 'react-icons/fa'
 
-const EventPage = () => {
+const EventPage = ({ addProductToCart }) => {
   useEffect(() => {
     // Scroll to the top of the page when the component loads
     window.scrollTo(0, 0)
@@ -28,39 +28,23 @@ const EventPage = () => {
     setTotalPrice(total)
   }, [stdCount, bckCount])
 
-  const increaseStdCount = () => {
-    setStdCount(stdCount + 1)
-  }
-  const decreaseStdCount = () => {
-    if (stdCount > 0) {
-      setStdCount(stdCount - 1)
-    }
-  }
-  const increaseBckCount = () => {
-    setBckCount(bckCount + 1)
-  }
-  const decreaseBckCount = () => {
-    if (bckCount > 0) {
-      setBckCount(bckCount - 1)
-    }
-  }
+  const increaseStdCount = () => setStdCount((pre) => pre + 1)
+  const decreaseStdCount = () =>
+    stdCount > 0 ? setStdCount((pre) => pre - 1) : null
+  const increaseBckCount = () => setBckCount((pre) => pre + 1)
+  const decreaseBckCount = () =>
+    bckCount > 0 ? setBckCount((pre) => pre - 1) : null
   const mblIncrease = () => {
-    if (selectedOpt === 'Standard 30$') {
-      setStdCount(stdCount + 1)
-    } else {
-      setBckCount(bckCount + 1)
-    }
+    selectedOpt === 'Standard 30$'
+      ? setStdCount((pre) => pre + 1)
+      : setBckCount((pre) => pre + 1)
   }
 
   const mblDecrease = () => {
-    if (selectedOpt === 'Standard 30$') {
-      if (stdCount > 0) {
-        setStdCount(stdCount - 1)
-      }
-    } else if (selectedOpt === 'Backstage 60$') {
-      if (bckCount > 0) {
-        setBckCount(bckCount - 1)
-      }
+    if (selectedOpt === 'Standard 30$' && stdCount > 0) {
+      setStdCount((pre) => pre - 1)
+    } else if (selectedOpt === 'Backstage 60$' && bckCount > 0) {
+      setBckCount((pre) => pre - 1)
     }
   }
 
@@ -95,7 +79,29 @@ const EventPage = () => {
               </button>
             </div>
           </div>
-          <button className="mbl-atc-btn">Add to cart</button>
+          <button
+            className={
+              stdCount === 0 && bckCount === 0 ? 'disabled' : 'mbl-atc-btn'
+            }
+            disabled={stdCount === 0 && bckCount === 0}
+            onClick={() => {
+              // Create a product object representing the selected event
+              const product = {
+                name: eventData.name,
+                day: eventData.day,
+                date: eventData.date,
+                venue: eventData.venue,
+                price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
+                count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
+                url: eventData.url,
+                type: selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+              }
+              // Add the selected event to the cart
+              addProductToCart(product)
+            }}
+          >
+            Add to Cart
+          </button>
         </div>
         <div className="event-details">
           <div className="about-event">
@@ -168,7 +174,30 @@ const EventPage = () => {
               </button>
             </div>
             <div className="total">Total: {totalPrice}$</div>
-            <button className="buy-btn">Add to Cart</button>
+            <button
+              className={
+                stdCount === 0 && bckCount === 0 ? 'disabled' : 'buy-btn'
+              }
+              disabled={stdCount === 0 && bckCount === 0}
+              onClick={() => {
+                // Create a product object representing the selected event
+                const product = {
+                  name: eventData.name,
+                  day: eventData.day,
+                  date: eventData.date,
+                  venue: eventData.venue,
+                  price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
+                  count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
+                  url: eventData.url,
+                  type:
+                    selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+                }
+                // Add the selected event to the cart
+                addProductToCart(product)
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>

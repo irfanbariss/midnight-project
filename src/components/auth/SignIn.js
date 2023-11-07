@@ -5,19 +5,25 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [signInError, setSignInError] = useState(null)
   const handleSignIn = (e) => {
     e.preventDefault()
+    setSignInError(null)
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(userCredential)
       })
       .catch((error) => {
-        console.log(error)
+        setSignInError('Wrong email address or password', error)
+        setTimeout(() => {
+          setSignInError(null)
+        }, 4000)
       })
   }
   return (
     <div className="form-container">
       <h2>Sign In</h2>
+      {signInError && <div className="error-message">{signInError}</div>}
       <form action="submit" onSubmit={handleSignIn}>
         <input
           type="email"

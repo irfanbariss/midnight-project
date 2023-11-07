@@ -87,6 +87,20 @@
           color: #000;
         }
       }
+      .disabled {
+        opacity: 0.6;
+        margin-top: 1rem;
+        width: 100%;
+        border: 1px solid #a408ff;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background-color: #0005;
+        color: #b23af7;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: 0.5s;
+        cursor: not-allowed;
+      }
     }
 
     .event-title {
@@ -243,6 +257,20 @@
           background-color: #a408ff;
           color: #000;
         }
+      }
+      .disabled {
+        opacity: 0.6;
+        margin-top: 1rem;
+        width: 70%;
+        border: 1px solid #a408ff;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background-color: #0005;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: 0.5s;
+        cursor: not-allowed;
       }
     }
   }

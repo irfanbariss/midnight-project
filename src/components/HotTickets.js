@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 const HotTickets = () => {
   const [selectedDay, setSelectedDay] = useState(null)
   const [filteredEvents, setFilteredEvents] = useState([])
+
   const handleDayClick = (day) => {
     setSelectedDay(day)
     const filtered = eventsData.filter((e) => e.day === day)
@@ -36,7 +37,9 @@ const HotTickets = () => {
         </div>
 
         <hr className="ticket-dash" />
-        <div className="buy">Add to Cart</div>
+        <Link to={`/hot-tickets/${image.name}`} className="buy">
+          Add to Cart
+        </Link>
       </div>
     ))
   }

@@ -190,6 +190,8 @@
     align-items: center;
     transition: 0.2s;
     text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
     &:hover {
       transform: translateY(5px);
       cursor: pointer;
