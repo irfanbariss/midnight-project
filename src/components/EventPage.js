@@ -199,7 +199,13 @@ const EventPage = ({ addProductToCart }) => {
                 -
               </button>
               <span className="standard-price">{stdCount}</span>
-              <button className="btn increase" onClick={increaseStdCount}>
+              <button
+                className="btn increase"
+                onClick={() => {
+                  increaseStdCount()
+                  setSelectedOpt('Standard 30$')
+                }}
+              >
                 +
               </button>
             </div>
@@ -212,7 +218,13 @@ const EventPage = ({ addProductToCart }) => {
                 -
               </button>
               <span className="backstage-price">{bckCount}</span>
-              <button className="btn increase" onClick={increaseBckCount}>
+              <button
+                className="btn increase"
+                onClick={() => {
+                  increaseBckCount()
+                  setSelectedOpt('Backstage 60$')
+                }}
+              >
                 +
               </button>
             </div>
