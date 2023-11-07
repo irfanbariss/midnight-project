@@ -5,7 +5,7 @@ import { auth } from '../firebase'
 import { onAuthStateChanged, signOut } from 'firebase/auth'
 import cart from '../assets/cart.png'
 
-const Navbar = ({ cartSize }) => {
+const Navbar = ({ cartItemCount }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [authUser, setAuthUser] = useState(false)
   const navigate = useNavigate()
@@ -30,6 +30,7 @@ const Navbar = ({ cartSize }) => {
     signOut(auth)
       .then(() => {
         alert('Successfully signed out')
+        navigate('/')
       })
       .catch((e) => console.log(e))
   }
@@ -58,9 +59,9 @@ const Navbar = ({ cartSize }) => {
           {authUser ? (
             <>
               <NavLink to="/cart" className="cart account-link">
-                <img src={cart} alt="" width={'30px'} height={'25px'} />
-                {cartSize > 0 && (
-                  <span className="cart-amount">{cartSize}</span>
+                <img src={cart} alt="" width={'30px'} height={'30px'} />
+                {cartItemCount > 0 && (
+                  <span className="cart-amount">{cartItemCount}</span>
                 )}
               </NavLink>
               <NavLink onClick={userSignOut} className={'account-link'}>

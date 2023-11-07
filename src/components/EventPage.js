@@ -9,6 +9,14 @@ import { auth } from '../firebase'
 
 const EventPage = ({ addProductToCart }) => {
   const [user, setUser] = useState(null)
+  const [noUserError, setNoUserError] = useState(false)
+  const [ticketAdded, setTicketAdded] = useState(false)
+  const { name } = useParams()
+  const eventData = imgData.find((event) => event.name === name)
+  const [stdCount, setStdCount] = useState(0)
+  const [bckCount, setBckCount] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [selectedOpt, setSelectedOpt] = useState('Choose a ticket')
 
   useEffect(() => {
     const listen = onAuthStateChanged(auth, (user) => {
@@ -29,12 +37,6 @@ const EventPage = ({ addProductToCart }) => {
     // Scroll to the top of the page when the component loads
     window.scrollTo(0, 0)
   }, [])
-  const { name } = useParams()
-  const eventData = imgData.find((event) => event.name === name)
-  const [stdCount, setStdCount] = useState(0)
-  const [bckCount, setBckCount] = useState(0)
-  const [totalPrice, setTotalPrice] = useState(0)
-  const [selectedOpt, setSelectedOpt] = useState('Choose a ticket')
 
   const handleOptChange = (e) => {
     setSelectedOpt(e.target.value)
@@ -114,9 +116,9 @@ const EventPage = ({ addProductToCart }) => {
             disabled={stdCount === 0 && bckCount === 0}
             onClick={() => {
               if (!user) {
-                document.querySelector('.no-user-error').style.display = 'block'
+                setNoUserError(true)
               } else {
-                document.querySelector('.no-user-error').style.display = 'none'
+                setNoUserError(false)
                 // Create a product object representing the selected event
                 const product = {
                   name: eventData.name,
@@ -131,12 +133,18 @@ const EventPage = ({ addProductToCart }) => {
                 }
                 // Add the selected event to the cart
                 addProductToCart(product)
+                setTicketAdded(true)
               }
             }}
           >
             Add to Cart
           </button>
-          <p className="no-user-error">You have to sign in first</p>
+          {noUserError && (
+            <p className="no-user-error">You have to sign in first</p>
+          )}
+          {ticketAdded && (
+            <p className="ticket-added"> Ticket added to your cart</p>
+          )}
         </div>
         <div className="event-details">
           <div className="about-event">
@@ -216,11 +224,9 @@ const EventPage = ({ addProductToCart }) => {
               disabled={stdCount === 0 && bckCount === 0}
               onClick={() => {
                 if (!user) {
-                  document.querySelector('.no-user-error').style.display =
-                    'block'
+                  setNoUserError(true)
                 } else {
-                  document.querySelector('.no-user-error').style.display =
-                    'none'
+                  setNoUserError(false)
                   // Create a product object representing the selected event
                   const product = {
                     name: eventData.name,
@@ -235,12 +241,18 @@ const EventPage = ({ addProductToCart }) => {
                   }
                   // Add the selected event to the cart
                   addProductToCart(product)
+                  setTicketAdded(true)
                 }
               }}
             >
               Add to Cart
             </button>
-            <p className="no-user-error">You have to sign in first</p>
+            {noUserError && (
+              <p className="no-user-error">You have to sign in first</p>
+            )}
+            {ticketAdded && (
+              <p className="ticket-added">Ticket added to your cart</p>
+            )}
           </div>
         </div>
       </div>

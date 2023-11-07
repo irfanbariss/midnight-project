@@ -8,6 +8,14 @@ import { auth } from '../firebase'
 
 const IIEventPage = ({ addProductToCart }) => {
   const [user, setUser] = useState(null)
+  const [noUserError, setNoUserError] = useState(false)
+  const [ticketAdded, setTicketAdded] = useState(false)
+  const { name } = useParams()
+  const eventData = allEvents.find((event) => event.name === name)
+  const [stdCount, setStdCount] = useState(0)
+  const [bckCount, setBckCount] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [selectedOpt, setSelectedOpt] = useState('Choose a ticket')
 
   useEffect(() => {
     const listen = onAuthStateChanged(auth, (user) => {
@@ -28,12 +36,6 @@ const IIEventPage = ({ addProductToCart }) => {
     // Scroll to the top of the page when the component loads
     window.scrollTo(0, 0)
   }, [])
-  const { name } = useParams()
-  const eventData = allEvents.find((event) => event.name === name)
-  const [stdCount, setStdCount] = useState(0)
-  const [bckCount, setBckCount] = useState(0)
-  const [totalPrice, setTotalPrice] = useState(0)
-  const [selectedOpt, setSelectedOpt] = useState('Standard 30$')
 
   const handleOptChange = (e) => {
     setSelectedOpt(e.target.value)
@@ -95,6 +97,7 @@ const IIEventPage = ({ addProductToCart }) => {
           <h2>Tickets</h2>
           <div className="options">
             <select value={selectedOpt} onChange={handleOptChange}>
+              <option className="choose">Choose a ticket</option>
               <option className="std">Standard {stdPrice}$</option>
               <option className="bck">Backstage {bckPrice}$</option>
             </select>
@@ -107,7 +110,15 @@ const IIEventPage = ({ addProductToCart }) => {
                 {selectedOpt === 'Standard 30$' ? stdCount : bckCount}
               </span>
               <span>Total: {totalPrice}$</span>
-              <button className="btn increase" onClick={mblIncrease}>
+              <button
+                className="btn increase"
+                onClick={
+                  selectedOpt === 'Standard 30$' ||
+                  selectedOpt === 'Backstage 60$'
+                    ? mblIncrease
+                    : null
+                }
+              >
                 +
               </button>
             </div>
@@ -119,9 +130,9 @@ const IIEventPage = ({ addProductToCart }) => {
             disabled={stdCount === 0 && bckCount === 0}
             onClick={() => {
               if (!user) {
-                document.querySelector('.no-user-error').style.display = 'block'
+                setNoUserError(true)
               } else {
-                document.querySelector('.no-user-error').style.display = 'none'
+                setNoUserError(false)
                 // Create a product object representing the selected event
                 const product = {
                   name: eventData.name,
@@ -136,12 +147,18 @@ const IIEventPage = ({ addProductToCart }) => {
                 }
                 // Add the selected event to the cart
                 addProductToCart(product)
+                setTicketAdded(true)
               }
             }}
           >
             Add to Cart
           </button>
-          <p className="no-user-error">You have to sign in first</p>
+          {noUserError && (
+            <p className="no-user-error">You have to sign in first</p>
+          )}
+          {ticketAdded && (
+            <p className="ticket-added">Ticket added to your cart</p>
+          )}
         </div>
         <div className="event-details">
           <div className="about-event">
@@ -219,11 +236,9 @@ const IIEventPage = ({ addProductToCart }) => {
               disabled={stdCount === 0 && bckCount === 0}
               onClick={() => {
                 if (!user) {
-                  document.querySelector('.no-user-error').style.display =
-                    'block'
+                  setNoUserError(true)
                 } else {
-                  document.querySelector('.no-user-error').style.display =
-                    'none'
+                  setNoUserError(false)
                   // Create a product object representing the selected event
                   const product = {
                     name: eventData.name,
@@ -238,12 +253,18 @@ const IIEventPage = ({ addProductToCart }) => {
                   }
                   // Add the selected event to the cart
                   addProductToCart(product)
+                  setTicketAdded(true)
                 }
               }}
             >
               Add to Cart
             </button>
-            <p className="no-user-error">You have to sign in first</p>
+            {noUserError && (
+              <p className="no-user-error">You have to sign in first</p>
+            )}
+            {ticketAdded && (
+              <p className="ticket-added">Ticket added to your cart</p>
+            )}
           </div>
         </div>
       </div>

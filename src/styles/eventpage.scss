@@ -1,13 +1,19 @@
+.no-user-error {
+  margin-top: 1rem;
+  color: red;
+}
+.ticket-added {
+  margin-top: 1rem;
+  color: lightgreen;
+}
+
 .event-container {
   display: flex;
   flex-wrap: wrap;
   margin: 1rem auto;
   max-width: 1920px;
   //   height: 100%;
-  .no-user-error {
-    display: none;
-    color: red;
-  }
+
   .single-event {
     @media screen and (max-width: 768px) {
       width: 100%;

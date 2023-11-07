@@ -9,6 +9,14 @@ import { auth } from '../firebase'
 
 const IEventPage = ({ addProductToCart }) => {
   const [user, setUser] = useState(null)
+  const [noUserError, setNoUserError] = useState(false)
+  const { name } = useParams()
+  const eventData = eventsData.find((event) => event.name === name)
+  const [stdCount, setStdCount] = useState(0)
+  const [bckCount, setBckCount] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [selectedOpt, setSelectedOpt] = useState('Choose a ticket')
+  const [ticketAdded, setTicketAdded] = useState(false)
   useEffect(() => {
     // Scroll to the top of the page when the component loads
     window.scrollTo(0, 0)
@@ -27,13 +35,6 @@ const IEventPage = ({ addProductToCart }) => {
       listen()
     }
   }, [])
-
-  const { name } = useParams()
-  const eventData = eventsData.find((event) => event.name === name)
-  const [stdCount, setStdCount] = useState(0)
-  const [bckCount, setBckCount] = useState(0)
-  const [totalPrice, setTotalPrice] = useState(0)
-  const [selectedOpt, setSelectedOpt] = useState('Choose a ticket')
 
   const handleOptChange = (e) => {
     setSelectedOpt(e.target.value)
@@ -130,6 +131,7 @@ const IEventPage = ({ addProductToCart }) => {
               </button>
             </div>
           </div>
+
           <button
             className={
               stdCount === 0 && bckCount === 0 ? 'disabled' : 'mbl-atc-btn'
@@ -137,9 +139,9 @@ const IEventPage = ({ addProductToCart }) => {
             disabled={stdCount === 0 && bckCount === 0}
             onClick={() => {
               if (!user) {
-                document.querySelector('.no-user-error').style.display = 'block'
+                setNoUserError(true)
               } else {
-                document.querySelector('.no-user-error').style.display = 'none'
+                setNoUserError(false)
                 // Create a product object representing the selected event
                 const product = {
                   name: eventData.name,
@@ -153,13 +155,19 @@ const IEventPage = ({ addProductToCart }) => {
                     selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
                 }
                 // Add the selected event to the cart
+                setTicketAdded(true)
                 addProductToCart(product)
               }
             }}
           >
             Add to Cart
           </button>
-          <p className="no-user-error">You have to sign in first</p>
+          {noUserError && (
+            <p className="no-user-error">You have to sign in first</p>
+          )}
+          {ticketAdded && (
+            <p className="ticket-added">Ticket added to your cart</p>
+          )}
         </div>
         <div className="event-details">
           <div className="about-event">
@@ -249,11 +257,9 @@ const IEventPage = ({ addProductToCart }) => {
               disabled={stdCount === 0 && bckCount === 0}
               onClick={() => {
                 if (!user) {
-                  document.querySelector('.no-user-error').style.display =
-                    'block'
+                  setNoUserError(true)
                 } else {
-                  document.querySelector('.no-user-error').style.display =
-                    'none'
+                  setNoUserError(false)
                   // Create a product object representing the selected event
                   const product = {
                     name: eventData.name,
@@ -268,12 +274,18 @@ const IEventPage = ({ addProductToCart }) => {
                   }
                   // Add the selected event to the cart
                   addProductToCart(product)
+                  setTicketAdded(true)
                 }
               }}
             >
               Add to Cart
             </button>
-            <p className="no-user-error">You have to sign in first</p>
+            {noUserError && (
+              <p className="no-user-error">You have to sign in first</p>
+            )}
+            {ticketAdded && (
+              <p className="ticket-added">Ticket added to your cart</p>
+            )}
           </div>
         </div>
       </div>
