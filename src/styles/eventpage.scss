@@ -4,6 +4,10 @@
   margin: 1rem auto;
   max-width: 1920px;
   //   height: 100%;
+  .no-user-error {
+    display: none;
+    color: red;
+  }
   .single-event {
     @media screen and (max-width: 768px) {
       width: 100%;
@@ -209,6 +213,7 @@
       .total {
         color: #777;
       }
+
       .buttons {
         display: flex;
         align-items: center;

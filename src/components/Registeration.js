@@ -13,15 +13,7 @@ const Registeration = () => {
   const toggleForm = () => {
     setIsSignup((prevIsSignUp) => !prevIsSignUp)
   }
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   const formData = new FormData(e.target)
-  //   const formObject = {}
-  //   formData.forEach((value, key) => {
-  //     formObject[key] = value
-  //   })
-  //   console.log('Form Data:', formObject)
-  // }
+
   return (
     <div className="wrapper">
       <div className="account-container">

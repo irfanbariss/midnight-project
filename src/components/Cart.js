@@ -9,6 +9,10 @@ const Cart = ({
   onCartUpdate,
 }) => {
   useEffect(() => {
+    // Scroll to the top of the page when the component loads
+    window.scrollTo(0, 0)
+  }, [])
+  useEffect(() => {
     onCartUpdate(products)
   }, [products])
   const [purchased, setPurchased] = useState(false)

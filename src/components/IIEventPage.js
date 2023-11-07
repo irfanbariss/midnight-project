@@ -3,8 +3,27 @@ import { useEffect, useState } from 'react'
 import { FaLocationArrow } from 'react-icons/fa'
 import allEvents from '../data/AllEventsData'
 import '../styles/eventpage.scss'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../firebase'
 
 const IIEventPage = ({ addProductToCart }) => {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user)
+
+        console.log(user)
+      } else {
+        setUser(null)
+      }
+    })
+    return () => {
+      listen()
+    }
+  }, [])
+
   useEffect(() => {
     // Scroll to the top of the page when the component loads
     window.scrollTo(0, 0)
@@ -99,23 +118,30 @@ const IIEventPage = ({ addProductToCart }) => {
             }
             disabled={stdCount === 0 && bckCount === 0}
             onClick={() => {
-              // Create a product object representing the selected event
-              const product = {
-                name: eventData.name,
-                day: eventData.day,
-                date: eventData.date,
-                venue: eventData.venue,
-                price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
-                count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
-                url: eventData.url,
-                type: selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+              if (!user) {
+                document.querySelector('.no-user-error').style.display = 'block'
+              } else {
+                document.querySelector('.no-user-error').style.display = 'none'
+                // Create a product object representing the selected event
+                const product = {
+                  name: eventData.name,
+                  day: eventData.day,
+                  date: eventData.date,
+                  venue: eventData.venue,
+                  price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
+                  count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
+                  url: eventData.url,
+                  type:
+                    selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+                }
+                // Add the selected event to the cart
+                addProductToCart(product)
               }
-              // Add the selected event to the cart
-              addProductToCart(product)
             }}
           >
             Add to Cart
           </button>
+          <p className="no-user-error">You have to sign in first</p>
         </div>
         <div className="event-details">
           <div className="about-event">
@@ -192,24 +218,32 @@ const IIEventPage = ({ addProductToCart }) => {
               }
               disabled={stdCount === 0 && bckCount === 0}
               onClick={() => {
-                // Create a product object representing the selected event
-                const product = {
-                  name: eventData.name,
-                  day: eventData.day,
-                  date: eventData.date,
-                  venue: eventData.venue,
-                  price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
-                  count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
-                  url: eventData.url,
-                  type:
-                    selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+                if (!user) {
+                  document.querySelector('.no-user-error').style.display =
+                    'block'
+                } else {
+                  document.querySelector('.no-user-error').style.display =
+                    'none'
+                  // Create a product object representing the selected event
+                  const product = {
+                    name: eventData.name,
+                    day: eventData.day,
+                    date: eventData.date,
+                    venue: eventData.venue,
+                    price: selectedOpt === 'Standard 30$' ? stdPrice : bckPrice,
+                    count: selectedOpt === 'Standard 30$' ? stdCount : bckCount,
+                    url: eventData.url,
+                    type:
+                      selectedOpt === 'Standard 30$' ? 'Standard' : 'Backstage',
+                  }
+                  // Add the selected event to the cart
+                  addProductToCart(product)
                 }
-                // Add the selected event to the cart
-                addProductToCart(product)
               }}
             >
               Add to Cart
             </button>
+            <p className="no-user-error">You have to sign in first</p>
           </div>
         </div>
       </div>
