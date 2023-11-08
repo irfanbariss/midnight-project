@@ -53,7 +53,6 @@ const Carousel = ({ data }) => {
                 alt={img.name}
                 key={idx}
                 className={slide === idx ? 'slide' : 'slide slide-hidden'}
-                loading="lazy"
               />
             </Link>
           )
